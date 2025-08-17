@@ -46,7 +46,3 @@ View the dashboards here:
 ## ⚠️ Disclaimer
 The **Predictive** and **Prescriptive** dashboards use *simulated examples only*.  
 They demonstrate the *concepts* of advanced analytics, but real-world usage would require proper data science methods, forecasting models, and domain expertise.
-
----
-
-## 📂 Project Structure
