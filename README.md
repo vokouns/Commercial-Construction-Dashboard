@@ -7,7 +7,7 @@ The dashboards are built as a teaching/portfolio tool and use **simulated data**
 
 ## 🚀 Live Demo
 View the dashboards here:  
-👉 [GitHub Pages Deployment](https://YOUR-USERNAME.github.io/REPO-NAME/)
+👉 [GitHub Pages Deployment]([https://YOUR-USERNAME.github.io/REPO-NAME/](https://vokouns.github.io/Commercial-Construction-Dashboard/))
 
 ---
 
