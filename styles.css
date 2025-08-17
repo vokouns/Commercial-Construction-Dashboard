@@ -195,25 +195,13 @@ main .card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,
   flex: 1 1 0;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--light-bg);
   border: 2px solid var(--navy-blue);
   border-radius: 12px;
   padding: 14px 16px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   position: relative;
   min-height: 200px;
-}
-
-/* Arrow between cards (no extra markup) */
-.stage-card:not(:last-child)::after {
-  content: "→";
-  position: absolute;
-  right: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--navy-blue);
-  font-weight: 700;
-  font-size: 1.1rem;
 }
 
 .stage-icon { font-size: 1.4rem; line-height: 1; margin-bottom: 6px; }
@@ -237,4 +225,63 @@ main .card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,
 /* Phone: single column */
 @media (max-width: 640px) {
   .stage-card { flex: 1 1 100%; }
+}
+
+
+/* --- Hero layout polish --- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  gap: 24px;
+  align-items: center;             /* vertically center content */
+}
+
+/* Left side spacing */
+.hero-left h2 { margin: 0 0 8px; }
+.hero-left p  { margin: 0 0 14px; }
+.cta-row      { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Right side: tidy title + chips column */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;         /* keep everything left-aligned in the card */
+  gap: 10px;
+}
+.hero-right-title {
+  margin: 0;                       /* remove big default margin */
+  color: var(--navy-blue);
+  letter-spacing: .2px;
+}
+
+/* Chips stack cleanly with consistent sizing */
+.chips {
+  display: grid;
+  grid-template-columns: 1fr;      /* one per row on desktop; easy to scan */
+  gap: 10px;
+  width: 100%;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 2px solid var(--navy-blue);
+  border-radius: 999px;
+  background: var(--light-bg);
+  font-size: 0.95rem;
+  line-height: 1.1;
+}
+.chip span {
+  font-weight: 800;
+  color: var(--navy-blue);
+  font-variant-numeric: tabular-nums; /* aligns numbers nicely */
+}
+
+/* Make the hero breathe a bit less on smaller screens */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { align-items: stretch; }
+  .chips { grid-template-columns: 1fr; }
 }

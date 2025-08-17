@@ -1,10 +1,15 @@
-// ==================== Descriptive Dashboard JS ====================
+// ==================== Descriptive Dashboard JS ==================== 
 // Works with dashboards/descriptive.html and data/projects.csv
 // KPIs: Total Projects, Average Cost, Average Duration
 // Charts:
 //   - All years: Projects by YEAR, Avg Actual Cost by YEAR
 //   - Specific year: Projects by MONTH, Avg Actual Cost by MONTH
 // Totals (Planned vs Actual) always reflect the current filter slice
+//
+// Change Orders (optional canvases):
+//   - <canvas id="coCountTrend"></canvas>   // volume over time
+//   - <canvas id="coCostTrend"></canvas>    // cost over time
+// If those canvases are not present, the code skips rendering them gracefully.
 // ==================================================================
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -14,7 +19,6 @@ window.addEventListener("DOMContentLoaded", () => {
     n == null || isNaN(n) ? "N/A" : `$${Math.round(n).toLocaleString()}`;
   const parseDate = (s) => (s ? new Date(s) : null);
 
-  // Compact number formatting for axes/tooltips
   function abbrNumber(n) {
     if (!isFinite(n)) return "0";
     const abs = Math.abs(n);
@@ -36,47 +40,81 @@ window.addEventListener("DOMContentLoaded", () => {
     cProjectsByYear: $("projectsByYear"),
     cTotalsBar: $("totalsBar"),
     cAvgCostByYear: $("avgCostByYear"),
+
+    // Optional change-order canvases
+    cCoCountTrend: $("coCountTrend"),
+    cCoCostTrend: $("coCostTrend"),
   };
 
-  // Warn if any element is missing
   Object.entries(el).forEach(([k, v]) => {
-    if (!v) console.warn(`[DESCRIPTIVE] Missing element: ${k}`);
+    if (!v) console.debug(`[DESCRIPTIVE] Optional/missing element: ${k}`);
   });
 
   // ---------- Data & charts ----------
   let allProjects = [];
-  const charts = { projectsByYear: null, totalsBar: null, avgCostByYear: null };
+  let allCOs = []; // change orders
+  const charts = {
+    projectsByYear: null,
+    totalsBar: null,
+    avgCostByYear: null,
 
-  // Load CSV (path is relative to the PAGE URL: /dashboards/descriptive.html)
-  d3.csv("../data/projects.csv")
-    .then((rows) => {
-      // Coerce numeric fields and keep date strings (parse on use)
-      allProjects = rows.map((d) => ({
+    // change orders
+    coCountTrend: null,
+    coCostTrend: null,
+  };
+
+  // Load both CSVs
+  Promise.all([
+    d3.csv("../data/projects.csv"),
+    d3.csv("../data/change_orders.csv"),
+  ])
+    .then(([projectRows, coRows]) => {
+      // projects
+      allProjects = projectRows.map((d) => ({
         ...d,
         planned_budget: +d.planned_budget,
         actual_cost: +d.actual_cost,
         completion_pct: +d.completion_pct,
         start_date: d.start_date,
         planned_end: d.planned_end,
-        actual_end: d.actual_end || "", // may be empty for in-flight projects
+        actual_end: d.actual_end || "",
+      }));
+
+      // change orders
+      allCOs = coRows.map((d) => ({
+        project_id: d.project_id,
+        phase_id: d.phase_id,
+        co_id: d.co_id,
+        co_cost: +d.co_cost,
+        co_reason: d.co_reason || "Unspecified",
+        date: d.date, // parse later on use
       }));
 
       populateYearFilter(allProjects);
-      update(allProjects); // initial render
+      update(allProjects, allCOs); // initial render
 
       el.yearFilter.addEventListener("change", () => {
         const y = el.yearFilter.value;
-        const filtered =
+        const projSlice =
           y === "all"
             ? allProjects
             : allProjects.filter(
                 (r) => new Date(r.start_date).getFullYear().toString() === y
               );
-        update(filtered);
+
+        const coSlice =
+          y === "all"
+            ? allCOs
+            : allCOs.filter((r) => {
+                const d = new Date(r.date);
+                return !isNaN(d) && d.getFullYear().toString() === y;
+              });
+
+        update(projSlice, coSlice);
       });
     })
     .catch((err) => {
-      console.error("[DESCRIPTIVE] Failed to load ../data/projects.csv:", err);
+      console.error("[DESCRIPTIVE] CSV load error:", err);
     });
 
   // ---------- UI builders ----------
@@ -93,25 +131,23 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function update(data) {
-    updateKPIs(data);
+  function update(projectsSlice, coSlice) {
+    updateKPIs(projectsSlice);
     const selected = el.yearFilter.value; // "all" or "YYYY"
-    renderCharts(data, selected);
+    renderProjectCharts(projectsSlice, selected);
+    renderCOCharts(coSlice, selected);
   }
 
   // ---------- KPIs ----------
   function updateKPIs(data) {
-    // Total projects
     el.total.textContent = data.length;
 
-    // Average actual cost
     const avgCost = d3.mean(
       data,
       (r) => (isFinite(r.actual_cost) ? r.actual_cost : NaN)
     );
     el.avgCost.textContent = moneyStr(avgCost);
 
-    // Average duration (days) using actual_end if present else planned_end
     const durations = data
       .map((r) => {
         const s = parseDate(r.start_date);
@@ -126,8 +162,7 @@ window.addEventListener("DOMContentLoaded", () => {
         : "N/A";
   }
 
-  // ---------- Rollups ----------
-  // by year
+  // ---------- Project rollups ----------
   function rollupCountByYear(rows) {
     const out = {};
     rows.forEach((r) => {
@@ -150,7 +185,6 @@ window.addEventListener("DOMContentLoaded", () => {
     Object.keys(sums).forEach((y) => (out[y] = sums[y] / counts[y]));
     return out;
   }
-  // by month in a given year
   function rollupCountByMonth(rows, year) {
     const counts = Array(12).fill(0);
     rows.forEach((r) => {
@@ -173,19 +207,57 @@ window.addEventListener("DOMContentLoaded", () => {
     return sums.map((s, i) => (counts[i] ? s / counts[i] : 0));
   }
 
-  // ---------- Charts ----------
-  function renderCharts(data, selectedYearValue) {
+  // ---------- Change-order rollups ----------
+  function coCountByYear(rows) {
+    const out = {};
+    rows.forEach((r) => {
+      const d = new Date(r.date);
+      if (isNaN(d)) return;
+      const y = d.getFullYear();
+      out[y] = (out[y] || 0) + 1;
+    });
+    return out;
+  }
+  function coCostByYear(rows) {
+    const out = {};
+    rows.forEach((r) => {
+      const d = new Date(r.date);
+      if (isNaN(d)) return;
+      const y = d.getFullYear();
+      out[y] = (out[y] || 0) + (isFinite(r.co_cost) ? r.co_cost : 0);
+    });
+    return out;
+  }
+  function coCountByMonth(rows, year) {
+    const arr = Array(12).fill(0);
+    rows.forEach((r) => {
+      const d = new Date(r.date);
+      if (!isNaN(d) && d.getFullYear() === year) arr[d.getMonth()] += 1;
+    });
+    return arr;
+  }
+  function coCostByMonth(rows, year) {
+    const arr = Array(12).fill(0);
+    rows.forEach((r) => {
+      const d = new Date(r.date);
+      if (!isNaN(d) && d.getFullYear() === year && isFinite(r.co_cost)) {
+        arr[d.getMonth()] += r.co_cost;
+      }
+    });
+    return arr;
+  }
+
+  // ---------- Charts: Projects ----------
+  function renderProjectCharts(data, selectedYearValue) {
     const isAll = selectedYearValue === "all";
     const yearInt = isAll ? null : parseInt(selectedYearValue, 10);
 
-    // Update titles to reflect mode
     const projectsTitle = el.cProjectsByYear?.previousElementSibling;
-    const totalsTitle   = el.cTotalsBar?.previousElementSibling; // unchanged
     const costTitle     = el.cAvgCostByYear?.previousElementSibling;
     if (projectsTitle) projectsTitle.textContent = isAll ? "Projects by Year" : `Projects by Month (${yearInt})`;
     if (costTitle)     costTitle.textContent     = isAll ? "Avg Actual Cost by Year" : `Avg Actual Cost by Month (${yearInt})`;
 
-    // ----- 1) Projects: by year OR by month -----
+    // 1) Projects by year / month
     let labels, values, rotateX;
     if (isAll) {
       const countsByYear = rollupCountByYear(data);
@@ -218,7 +290,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-    // ----- 2) Totals planned vs actual (always current slice) -----
+    // 2) Totals planned vs actual
     const totalPlanned = sumSafe(data.map((r) => r.planned_budget));
     const totalActual  = sumSafe(data.map((r) => r.actual_cost));
 
@@ -238,7 +310,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     );
 
-    // ----- 3) Avg actual cost: by year OR by month -----
+    // 3) Avg actual cost by year / month
     let costLabels, costValues, costRotateX;
     if (isAll) {
       const avgCostByYear = rollupAvgActualCostByYear(data);
@@ -270,6 +342,92 @@ window.addEventListener("DOMContentLoaded", () => {
         options: axisOptions({ money: true, rotateX: costRotateX }),
       }
     );
+  }
+
+  // ---------- Charts: Change Orders ----------
+  function renderCOCharts(coRows, selectedYearValue) {
+    if (!coRows) return;
+
+    const isAll = selectedYearValue === "all";
+    const yearInt = isAll ? null : parseInt(selectedYearValue, 10);
+
+    // a) Volume trend (count)
+    if (el.cCoCountTrend) {
+      let labels, values, rotateX;
+      if (isAll) {
+        const counts = coCountByYear(coRows);
+        labels = Object.keys(counts).map(Number).sort((a, b) => a - b);
+        values = labels.map((y) => counts[y] || 0);
+        rotateX = labels.length > 12;
+        const t = el.cCoCountTrend.previousElementSibling;
+        if (t) t.textContent = "Change Orders — Count by Year";
+      } else {
+        labels = MONTH_LABELS.slice();
+        values = coCountByMonth(coRows, yearInt);
+        rotateX = false;
+        const t = el.cCoCountTrend.previousElementSibling;
+        if (t) t.textContent = `Change Orders — Count by Month (${yearInt})`;
+      }
+
+      charts.coCountTrend = drawOrUpdateChart(
+        charts.coCountTrend,
+        el.cCoCountTrend,
+        {
+          type: "bar",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Change Orders",
+                data: values,
+                categoryPercentage: 0.9,
+                barPercentage: 0.9,
+              },
+            ],
+          },
+          options: axisOptions({ money: false, rotateX }),
+        }
+      );
+    }
+
+    // b) Cost trend (sum of co_cost)
+    if (el.cCoCostTrend) {
+      let labels, values, rotateX;
+      if (isAll) {
+        const totals = coCostByYear(coRows);
+        labels = Object.keys(totals).map(Number).sort((a, b) => a - b);
+        values = labels.map((y) => totals[y] || 0);
+        rotateX = labels.length > 12;
+        const t = el.cCoCostTrend.previousElementSibling;
+        if (t) t.textContent = "Change Orders — Cost by Year";
+      } else {
+        labels = MONTH_LABELS.slice();
+        values = coCostByMonth(coRows, yearInt);
+        rotateX = false;
+        const t = el.cCoCostTrend.previousElementSibling;
+        if (t) t.textContent = `Change Orders — Cost by Month (${yearInt})`;
+      }
+
+      charts.coCostTrend = drawOrUpdateChart(
+        charts.coCostTrend,
+        el.cCoCostTrend,
+        {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "CO Cost",
+                data: values,
+                tension: 0.25,
+                pointRadius: 3,
+              },
+            ],
+          },
+          options: axisOptions({ money: true, rotateX }),
+        }
+      );
+    }
   }
 
   // ---------- Chart helpers ----------

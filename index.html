@@ -17,11 +17,9 @@
     <!-- Hero -->
     <section class="hero">
       <div class="hero-left">
-        <h2>Start with the data you already have</h2>
+        <h2>Stronger Projects Start With Smarter Data</h2>
         <p>
-          Most construction companies have valuable information scattered across systems.
-          When it is pulled together in one place, you unlock faster reporting, simpler job reviews, and better forecasting.
-          This page explains the approach in plain language and links to a live demo with synthetic data.
+          Construction generates massive amounts of information, but it’s often scattered. A single data hub turns complexity into clarity, cutting through the noise. Leaders spend less time chasing numbers and more time driving results.
         </p>
         <div class="cta-row">
           <a class="btn primary" href="dashboards/descriptive.html">Open the demo</a>
@@ -29,7 +27,7 @@
         </div>
       </div>
       <div class="hero-right">
-        <h3>Synthetic Data:</h3>
+        <h3 class="hero-right-title">Synthetic Data:</h3>
         <div class="chip"><span>500</span> projects in demo</div>
         <div class="chip"><span>25</span> years of history</div>
         <div class="chip"><span>$8.3M</span> avg project cost</div>
@@ -39,28 +37,81 @@
     <!-- Why data matters -->
     <section id="why-data" class="tiles-grid" style="grid-template-columns: 1fr;">
       <article class="tile-card">
-        <h3>Why data matters to a construction business</h3>
+        <h3>Why Data Matters to a Construction Business</h3>
         <p class="tile-copy">
-          Decisions happen every day. Which jobs to pursue. How to staff the next month. Where cost and schedule risk is rising.
-          Data turns those choices from gut feel into repeatable practice.
+          Decisions happen every day. Which jobs to pursue. How to create the best quote. Where cost and schedule risk is rising. Strong use of data analytics can turn those choices from gut feelings into repeatable practices. Each business and workflow is unique, here are a few examples of how strong data practices and analytics can improve a construction business:
         </p>
         <ul>
-          <li><strong>Faster job reviews.</strong> See status and exposure by project, customer, superintendent, division, and region in minutes.</li>
-          <li><strong>More accurate estimates.</strong> Use historicals to set realistic budgets, labor rates, and contingency.</li>
-          <li><strong>Early risk detection.</strong> Spot change order drift, productivity dips, and long lead item delays early.</li>
-          <li><strong>Cleaner closeout and cash.</strong> Track billings, retainage, and collections more tightly.</li>
+          <li><strong>Faster job reviews.</strong> See the status of projects in real time.</li>
+          <li><strong>More accurate estimates.</strong> Use historical data to set realistic budgets, labor rates, and contingency.</li>
+          <li><strong>Early risk detection.</strong> Spot changes as they are happening to reduce order drift, productivity dips, and long lead item delays.</li>
           <li><strong>Better win rate.</strong> Aim business development at work that fits your strengths and margins.</li>
         </ul>
       </article>
     </section>
+
+
+    <!-- Four Stages of Analytics (bridge section) -->
+<section id="analytics-stages" class="tiles-grid" style="grid-template-columns: 1fr;">
+  <article class="tile-card">
+    <h3>The Four Stages of Analytics</h3>
+    <p class="stages-intro">
+      At its core, data analytics means using past records to answer business questions. Instead of gut feel, decisions are informed by facts, numbers from projects, budgets, schedules, or costs.</p> 
+    <p class="stages-intro">It’s about looking at patterns in your own history to understand what happened, why it happened, and what to do next. In order to do that, data analytics can be described as having four unique stages. Each stage builds on the last. Together they move the business from hindsight to foresight and action.
+    </p>
+
+    <div class="stage-flow">
+      <article class="stage-card">
+        <p><strong>Descriptive</strong> - gives visibility</p>
+        <p class="stage-copy">What leaders look for when they ask, “What happened?”</p>
+        <ul>
+          <li>Job cost vs. budget reports</li>
+          <li>Earned value vs. planned value</li>
+          <li>Project status dashboards</li>
+        </ul>
+      </article>
+
+      <article class="stage-card">
+        <p><strong>Diagnostic</strong> - explains the "why"</p>
+        <p class="stage-copy">Answering “why things went off track” questions.</p>
+        <ul>
+          <li>Identify causes of delays</li>
+          <li>Spot subcontractor performance issues</li>
+          <li>Analyze change order drivers</li>
+        </ul>
+      </article>
+
+      <article class="stage-card">
+        <p><strong>Predictive</strong> - prepares for what's ahead</p>
+        <p class="stage-copy">Looking ahead given how things are trending.</p>
+        <ul>
+          <li>Forecast cost at completion</li>
+          <li>Predict which jobs are at risk of overruns</li>
+          <li>Anticipate staffing and material shortages</li>
+        </ul>
+      </article>
+
+      <article class="stage-card">
+        <p><strong>Prescriptive</strong> - recommends what to do next</p>
+        <p class="stage-copy">Turn insights into actions that keep projects on track.</p>
+        <ul>
+          <li>Recommend adjustments to stay on schedule</li>
+          <li>Suggest budget reallocations based on risk</li>
+          <li>Guide bid/no-bid decisions</li>
+        </ul>
+      </article>
+    </div>
+  </article>
+</section>
+
+
 
     <!-- Step 1: Centralize -->
     <section id="centralize" class="tiles-grid" style="grid-template-columns: 1fr;">
       <article class="tile-card">
         <h3>Step 1: Put the data in one place</h3>
         <p class="tile-copy">
-          The first step is not AI. The first step is to collect the company’s history in a single, well-organized location.
-          A simple option is a <strong>SQL Server</strong> instance in your environment. A cloud database also works.
+          The first step is to collect the company’s history in a single, well-organized location. A simple option is to house all data in a <strong>relational database system</strong> such as a SQL Server database that lives in your environment or a cloud database.
         </p>
 
         <h4>What to bring together</h4>
@@ -79,7 +130,7 @@
           <li><strong>One source of truth.</strong> Leadership, PMs, and accounting look at the same numbers.</li>
           <li><strong>Reusability.</strong> Dashboards, ad-hoc questions, and models all read from the same tables.</li>
           <li><strong>Lower effort.</strong> No more rebuilding spreadsheets for every meeting.</li>
-          <li><strong>Security and control.</strong> Access is managed once at the database level.</li>
+          <li><strong>Security and control.</strong> Access to the database is restricted to only those who need it.</li>
         </ul>
 
         <h4>How the build-out works</h4>
@@ -92,89 +143,28 @@
         </ol>
 
         <p class="tile-copy">
-          Once the data is centralized, the company can answer everyday questions in minutes and prepare for deeper analysis.
+          Once the data is centralized, the four types of analytics can be used to answer everyday questions in minutes and prepare for deeper analysis.
         </p>
       </article>
     </section>
-    <!-- Four Stages of Analytics (bridge section) -->
-<section id="analytics-stages" class="stages container">
-  <h3>The four stages of analytics</h3>
-  <p class="stages-intro">
-    Each stage builds on the last. Together they move the business from hindsight to foresight and action.
-  </p>
-
-  <div class="stage-flow">
-    <article class="stage-card">
-      <div class="stage-icon" aria-hidden="true">📊</div>
-      <h4>Descriptive</h4>
-      <p class="stage-copy">What happened? Dashboards and KPIs summarize history for quick visibility.</p>
-      <ul>
-        <li>Totals and trends</li>
-        <li>Portfolio rollups</li>
-        <li>Simple comparisons</li>
-      </ul>
-    </article>
-
-    <article class="stage-card">
-      <div class="stage-icon" aria-hidden="true">🔍</div>
-      <h4>Diagnostic</h4>
-      <p class="stage-copy">Why did it happen? Finds drivers behind cost and schedule variance.</p>
-      <ul>
-        <li>Root-cause drilldowns</li>
-        <li>Cost code & vendor impact</li>
-        <li>Early warning signals</li>
-      </ul>
-    </article>
-
-    <article class="stage-card">
-      <div class="stage-icon" aria-hidden="true">📈</div>
-      <h4>Predictive</h4>
-      <p class="stage-copy">What will happen? Uses patterns in history to forecast likely outcomes.</p>
-      <ul>
-        <li>Cost & schedule outlook</li>
-        <li>Risk scoring</li>
-        <li>Pipeline projections</li>
-      </ul>
-    </article>
-
-    <article class="stage-card">
-      <div class="stage-icon" aria-hidden="true">✅</div>
-      <h4>Prescriptive</h4>
-      <p class="stage-copy">What should we do? Recommends actions tied to money and schedule impact.</p>
-      <ul>
-        <li>Prioritized actions</li>
-        <li>Scenario trade-offs</li>
-        <li>Closed-loop feedback</li>
-      </ul>
-    </article>
-  </div>
-
-  <p class="stages-outro">
-    Flow of value: <strong>Descriptive</strong> gives visibility → <strong>Diagnostic</strong> explains the “why” → 
-    <strong>Predictive</strong> prepares for what’s ahead → <strong>Prescriptive</strong> recommends what to do next.
-  </p>
-</section>
-
     <!-- What we can do once data is centralized -->
     <section id="stages" class="tiles-grid">
       <article class="tile-card">
-        <div class="tile-icon">📊</div>
         <h3>Descriptive analytics</h3>
         <p class="tile-copy">What happened. Totals, trends, and comparisons across the portfolio.</p>
         <ul>
           <li>Projects by year, customer, market, or PM</li>
           <li>Planned vs actual cost and duration</li>
-          <li>Top change order drivers</li>
+          <li>How many and what kind of change orders</li>
         </ul>
         <a class="tile-link" href="dashboards/descriptive.html">Open the descriptive demo →</a>
       </article>
 
       <article class="tile-card">
-        <div class="tile-icon">🔍</div>
         <h3>Diagnostic analytics</h3>
         <p class="tile-copy">Why it happened. Root causes behind overrun and delay.</p>
         <ul>
-          <li>Which cost codes drive variance</li>
+          <li>Which change order reasons are most common</li>
           <li>Supplier and subcontractor impact</li>
           <li>Early warning signals in weekly data</li>
         </ul>
@@ -182,7 +172,6 @@
       </article>
 
       <article class="tile-card">
-        <div class="tile-icon">📈</div>
         <h3>Predictive analytics</h3>
         <p class="tile-copy">What to expect. Forecast cost at completion and schedule risk using history.</p>
         <ul>
@@ -194,7 +183,6 @@
       </article>
 
       <article class="tile-card">
-        <div class="tile-icon">✅</div>
         <h3>Prescriptive analytics</h3>
         <p class="tile-copy">What to do next. Clear actions tied to money and schedule impact.</p>
         <ul>
@@ -203,27 +191,6 @@
           <li>Prioritize supplier substitutions</li>
         </ul>
         <a class="tile-link" href="dashboards/prescriptive.html">See a prescriptive example →</a>
-      </article>
-    </section>
-
-    <!-- Practical notes -->
-    <section id="practical" class="tiles-grid" style="grid-template-columns: 1fr 1fr;">
-      <article class="tile-card">
-        <h3>Data quality and governance</h3>
-        <ul>
-          <li><strong>Field names are plain.</strong> Keep column names simple and consistent.</li>
-          <li><strong>Dates and amounts are strict.</strong> Enforce valid formats at load time.</li>
-          <li><strong>History is frozen.</strong> Treat historical tables as write once. New data is added as new rows.</li>
-          <li><strong>Access is tiered.</strong> Executives see portfolio. PMs see their jobs. Accounting sees cost and billing.</li>
-        </ul>
-      </article>
-      <article class="tile-card">
-        <h3>Security and compliance</h3>
-        <ul>
-          <li><strong>Least privilege.</strong> Read access by role. Write access is limited.</li>
-          <li><strong>Auditable.</strong> Every load is logged. Changes are tracked.</li>
-          <li><strong>Backup and recovery.</strong> Regular backups and restore tests.</li>
-        </ul>
       </article>
     </section>
 
