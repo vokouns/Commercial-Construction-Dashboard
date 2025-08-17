@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Predictive Dashboard</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+  <header>
+    <h1>Project Overview - Predictive Dashboard Demo</h1>
+  </header>
+
+  <main>
+    <section class="controls">
+      <label for="horizonSelect">Forecast horizon:</label>
+      <select id="horizonSelect">
+        <option value="1">+1 year</option>
+        <option value="2">+2 years</option>
+        <option value="3" selected>+3 years</option>
+      </select>
+    </section>
+
+    <!-- KPIs -->
+    <section class="summary-cards">
+      <div class="card">
+        <h2>Next Year Avg Cost (forecast)</h2>
+        <p id="kpiNextYearCost">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Overrun Probability (portfolio)</h2>
+        <p id="kpiOverrunProb">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>At-Risk Projects (rule-based)</h2>
+        <p id="kpiAtRiskCount">Loading...</p>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts-grid">
+      <div class="chart-card">
+        <h3>Avg Actual Cost — Trend & Forecast</h3>
+        <canvas id="avgCostForecast"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Schedule Variance — Trend & Forecast (days)</h3>
+        <canvas id="schedVarForecast"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Portfolio Overrun Probability (baseline vs. adjusted)</h3>
+        <canvas id="overrunProbabilities"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Risk Score Distribution (rule-based)</h3>
+        <canvas id="riskScoreHistogram"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Projected Pipeline Cost (next 3 years)</h3>
+        <canvas id="pipelineForecast"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Notes</h3>
+        <p>Forecasts are demonstration-only using simple trends and rules on synthetic data.</p>
+      </div>
+    </section>
+
+    <div class="next-demo">
+  <a class="btn btn-primary" href="prescriptive.html">Go to Prescriptive Demo →</a>
+</div>
+
+  </main>
+
+  <footer><p>© 2025 Scott Park-Vokoun</p></footer>
+  <script src="../js/predictive.js"></script>
+</body>
+</html>

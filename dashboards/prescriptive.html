@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prescriptive Dashboard</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+  <header>
+    <h1>Project Overview - Prescriptive Dashboard Demo</h1>
+  </header>
+
+  <main>
+    <!-- Simple control: show top N recommendations -->
+    <section class="controls">
+      <label for="topN">Show top:</label>
+      <select id="topN">
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+    </section>
+
+    <!-- KPIs -->
+    <section class="summary-cards">
+      <div class="card">
+        <h2>Recommended Actions</h2>
+        <p id="kpiRecCount">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Projects at High Risk</h2>
+        <p id="kpiHighRisk">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Potential Savings (est.)</h2>
+        <p id="kpiSavings">Loading...</p>
+      </div>
+    </section>
+
+    <section class="charts-grid">
+      <div class="chart-card">
+        <h3>Action Mix (by category)</h3>
+        <canvas id="actionMix"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Priority Matrix (impact vs. effort)</h3>
+        <canvas id="priorityMatrix"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Top Recommendations</h3>
+        <div id="recTable" style="padding:8px 0;"></div>
+      </div>
+      <div class="chart-card">
+        <h3>Notes</h3>
+        <p>Recommendations are rule-based examples to illustrate prescriptive analytics with synthetic data.</p>
+      </div>
+    </section>
+
+    <div class="next-demo">
+  <a class="btn btn-primary" href="../index.html">Back to Start →</a>
+</div>
+
+  </main>
+
+  <footer><p>© 2025 Scott Park-Vokoun</p></footer>
+  <script src="../js/prescriptive.js"></script>
+</body>
+</html>
