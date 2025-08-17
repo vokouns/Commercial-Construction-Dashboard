@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Descriptive Dashboard | Mark Scott Construction</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <!-- D3 for CSV loading -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Chart.js for visuals -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Mark Scott Construction - Project Overview</h1>
+  </header>
+
+  <main>
+    <section class="controls">
+      <label for="yearFilter">Filter by Year:</label>
+      <select id="yearFilter">
+        <option value="all">All</option>
+      </select>
+    </section>
+
+    <section class="summary-cards">
+      <div class="card">
+        <h2>Total Projects</h2>
+        <p id="totalProjects">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Average Cost</h2>
+        <p id="averageCost">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Average Duration</h2>
+        <p id="averageDuration">Loading...</p>
+      </div>
+    </section>
+
+    <section class="charts-grid">
+      <div class="chart-card">
+        <h3>Projects by Year</h3>
+        <canvas id="projectsByYear"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Total Planned vs Actual (Current Filter)</h3>
+        <canvas id="totalsBar"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Avg Actual Cost by Year</h3>
+        <canvas id="avgCostByYear"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Mark Scott Construction | Demo Dashboard by Scott Park-Vokoun</p>
+  </footer>
+
+  <script src="../js/descriptive.js"></script>
+</body>
+</html>

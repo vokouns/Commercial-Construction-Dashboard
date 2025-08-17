@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Construction Analytics Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Construction Analytics Demo</h1>
+    <p class="subhead">How good data creates better decisions in commercial construction.</p>
+  </header>
+
+  <main class="home">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Start with the data you already have</h2>
+        <p>
+          Most construction companies have valuable information scattered across systems.
+          When it is pulled together in one place, you unlock faster reporting, simpler job reviews, and better forecasting.
+          This page explains the approach in plain language and links to a live demo with synthetic data.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="dashboards/descriptive.html">Open the demo</a>
+          <a class="btn ghost" href="#why-data">Read the approach</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="chip"><span>500</span> projects in demo</div>
+        <div class="chip"><span>25</span> years of history</div>
+        <div class="chip"><span>$8.3M</span> avg project cost</div>
+      </div>
+    </section>
+
+    <!-- Why data matters -->
+    <section id="why-data" class="tiles-grid" style="grid-template-columns: 1fr;">
+      <article class="tile-card">
+        <h3>Why data matters to a construction business</h3>
+        <p class="tile-copy">
+          Decisions happen every day. Which jobs to pursue. How to staff the next month. Where cost and schedule risk is rising.
+          Data turns those choices from gut feel into repeatable practice.
+        </p>
+        <ul>
+          <li><strong>Faster job reviews.</strong> See status and exposure by project, customer, superintendent, division, and region in minutes.</li>
+          <li><strong>More accurate estimates.</strong> Use historicals to set realistic budgets, labor rates, and contingency.</li>
+          <li><strong>Early risk detection.</strong> Spot change order drift, productivity dips, and long lead item delays early.</li>
+          <li><strong>Cleaner closeout and cash.</strong> Track billings, retainage, and collections more tightly.</li>
+          <li><strong>Better win rate.</strong> Aim business development at work that fits your strengths and margins.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- Step 1: Centralize -->
+    <section id="centralize" class="tiles-grid" style="grid-template-columns: 1fr;">
+      <article class="tile-card">
+        <h3>Step 1: Put the data in one place</h3>
+        <p class="tile-copy">
+          The first step is not AI. The first step is to collect the company’s history in a single, well-organized location.
+          A simple option is a <strong>SQL Server</strong> instance in your environment. A cloud database also works.
+        </p>
+
+        <h4>What to bring together</h4>
+        <ul>
+          <li><strong>Project facts:</strong> job number, customer, location, start and end dates, contract type.</li>
+          <li><strong>Budget and cost:</strong> original budget, revisions, actuals, committed cost, change orders.</li>
+          <li><strong>Schedule:</strong> planned vs actual milestones, critical items, delays.</li>
+          <li><strong>Labor and productivity:</strong> timesheets or cost codes, crew sizes, units installed.</li>
+          <li><strong>Procurement:</strong> subcontracts, POs, lead times, delivery dates.</li>
+          <li><strong>Billings and cash:</strong> pay apps, percent complete, retainage, collections.</li>
+          <li><strong>Safety and quality:</strong> incidents, inspections, punch items.</li>
+        </ul>
+
+        <h4>Why centralization matters</h4>
+        <ul>
+          <li><strong>One source of truth.</strong> Leadership, PMs, and accounting look at the same numbers.</li>
+          <li><strong>Reusability.</strong> Dashboards, ad-hoc questions, and models all read from the same tables.</li>
+          <li><strong>Lower effort.</strong> No more rebuilding spreadsheets for every meeting.</li>
+          <li><strong>Security and control.</strong> Access is managed once at the database level.</li>
+        </ul>
+
+        <h4>How the build-out works</h4>
+        <ol>
+          <li><strong>Inventory the systems.</strong> ERP, estimating, scheduling, field apps, shared drives.</li>
+          <li><strong>Define the core tables.</strong> Projects, budgets, actuals, change orders, milestones, timesheets.</li>
+          <li><strong>Move the history.</strong> Load historical CSVs or exports into the database.</li>
+          <li><strong>Automate fresh data.</strong> Set daily or hourly loads so the warehouse stays current.</li>
+          <li><strong>Document access.</strong> Who can read which tables. How to request changes.</li>
+        </ol>
+
+        <p class="tile-copy">
+          Once the data is centralized, the company can answer everyday questions in minutes and prepare for deeper analysis.
+        </p>
+      </article>
+    </section>
+    <!-- Four Stages of Analytics (bridge section) -->
+<section id="analytics-stages" class="stages container">
+  <h3>The four stages of analytics</h3>
+  <p class="stages-intro">
+    Each stage builds on the last. Together they move the business from hindsight to foresight and action.
+  </p>
+
+  <div class="stage-flow">
+    <article class="stage-card">
+      <div class="stage-icon" aria-hidden="true">📊</div>
+      <h4>Descriptive</h4>
+      <p class="stage-copy">What happened? Dashboards and KPIs summarize history for quick visibility.</p>
+      <ul>
+        <li>Totals and trends</li>
+        <li>Portfolio rollups</li>
+        <li>Simple comparisons</li>
+      </ul>
+    </article>
+
+    <article class="stage-card">
+      <div class="stage-icon" aria-hidden="true">🔍</div>
+      <h4>Diagnostic</h4>
+      <p class="stage-copy">Why did it happen? Finds drivers behind cost and schedule variance.</p>
+      <ul>
+        <li>Root-cause drilldowns</li>
+        <li>Cost code & vendor impact</li>
+        <li>Early warning signals</li>
+      </ul>
+    </article>
+
+    <article class="stage-card">
+      <div class="stage-icon" aria-hidden="true">📈</div>
+      <h4>Predictive</h4>
+      <p class="stage-copy">What will happen? Uses patterns in history to forecast likely outcomes.</p>
+      <ul>
+        <li>Cost & schedule outlook</li>
+        <li>Risk scoring</li>
+        <li>Pipeline projections</li>
+      </ul>
+    </article>
+
+    <article class="stage-card">
+      <div class="stage-icon" aria-hidden="true">✅</div>
+      <h4>Prescriptive</h4>
+      <p class="stage-copy">What should we do? Recommends actions tied to money and schedule impact.</p>
+      <ul>
+        <li>Prioritized actions</li>
+        <li>Scenario trade-offs</li>
+        <li>Closed-loop feedback</li>
+      </ul>
+    </article>
+  </div>
+
+  <p class="stages-outro">
+    Flow of value: <strong>Descriptive</strong> gives visibility → <strong>Diagnostic</strong> explains the “why” → 
+    <strong>Predictive</strong> prepares for what’s ahead → <strong>Prescriptive</strong> recommends what to do next.
+  </p>
+</section>
+
+    <!-- What we can do once data is centralized -->
+    <section id="stages" class="tiles-grid">
+      <article class="tile-card">
+        <div class="tile-icon">📊</div>
+        <h3>Descriptive analytics</h3>
+        <p class="tile-copy">What happened. Totals, trends, and comparisons across the portfolio.</p>
+        <ul>
+          <li>Projects by year, customer, market, or PM</li>
+          <li>Planned vs actual cost and duration</li>
+          <li>Top change order drivers</li>
+        </ul>
+        <a class="tile-link" href="dashboards/descriptive.html">Open the descriptive demo →</a>
+      </article>
+
+      <article class="tile-card">
+        <div class="tile-icon">🔍</div>
+        <h3>Diagnostic analytics</h3>
+        <p class="tile-copy">Why it happened. Root causes behind overrun and delay.</p>
+        <ul>
+          <li>Which cost codes drive variance</li>
+          <li>Supplier and subcontractor impact</li>
+          <li>Early warning signals in weekly data</li>
+        </ul>
+        <a class="tile-link" href="dashboards/diagnostic.html">See a diagnostic example →</a>
+      </article>
+
+      <article class="tile-card">
+        <div class="tile-icon">📈</div>
+        <h3>Predictive analytics</h3>
+        <p class="tile-copy">What to expect. Forecast cost at completion and schedule risk using history.</p>
+        <ul>
+          <li>Cost and schedule outlook given current burn</li>
+          <li>Risk scoring for active jobs</li>
+          <li>Pipeline and staffing projections</li>
+        </ul>
+        <a class="tile-link" href="dashboards/predictive.html">See a predictive example →</a>
+      </article>
+
+      <article class="tile-card">
+        <div class="tile-icon">✅</div>
+        <h3>Prescriptive analytics</h3>
+        <p class="tile-copy">What to do next. Clear actions tied to money and schedule impact.</p>
+        <ul>
+          <li>Recommend change order actions by impact</li>
+          <li>Suggest crew reassignments to hit dates</li>
+          <li>Prioritize supplier substitutions</li>
+        </ul>
+        <a class="tile-link" href="dashboards/prescriptive.html">See a prescriptive example →</a>
+      </article>
+    </section>
+
+    <!-- Practical notes -->
+    <section id="practical" class="tiles-grid" style="grid-template-columns: 1fr 1fr;">
+      <article class="tile-card">
+        <h3>Data quality and governance</h3>
+        <ul>
+          <li><strong>Field names are plain.</strong> Keep column names simple and consistent.</li>
+          <li><strong>Dates and amounts are strict.</strong> Enforce valid formats at load time.</li>
+          <li><strong>History is frozen.</strong> Treat historical tables as write once. New data is added as new rows.</li>
+          <li><strong>Access is tiered.</strong> Executives see portfolio. PMs see their jobs. Accounting sees cost and billing.</li>
+        </ul>
+      </article>
+      <article class="tile-card">
+        <h3>Security and compliance</h3>
+        <ul>
+          <li><strong>Least privilege.</strong> Read access by role. Write access is limited.</li>
+          <li><strong>Auditable.</strong> Every load is logged. Changes are tracked.</li>
+          <li><strong>Backup and recovery.</strong> Regular backups and restore tests.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="tiles-grid" style="grid-template-columns: 1fr;">
+      <article class="tile-card">
+        <h3>Ready to see it in action?</h3>
+        <p class="tile-copy">
+          The demo uses realistic synthetic data to show what is possible once your history is in one place.
+          The same approach works with your real data. We can start with read-only access and build value step by step.
+        </p>
+        <a class="btn primary" href="dashboards/descriptive.html">Open the descriptive demo</a>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Scott Park-Vokoun</p>
+  </footer>
+
+  <!-- Make entire tile clickable via keyboard and mouse -->
+  <script>
+    document.querySelectorAll('.tile-card').forEach(card => {
+      const link = card.querySelector('a.tile-link, .btn.primary');
+      if (!link) return;
+      card.tabIndex = 0;
+      card.addEventListener('click', e => {
+        if (e.target.tagName.toLowerCase() !== 'a') link.click();
+      });
+      card.addEventListener('keypress', e => {
+        if (e.key === 'Enter' || e.key === ' ') link.click();
+      });
+      card.setAttribute('role', 'link');
+      card.setAttribute('aria-label', link.textContent);
+    });
+  </script>
+</body>
+</html>
