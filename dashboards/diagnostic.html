@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diagnostic Dashboard</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <!-- D3 for CSV loading -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Chart.js for visuals -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Project Overview - Diagnostic Dashboard Demo</h1>
+  </header>
+
+  <main>
+    <!-- Same filter control as Descriptive -->
+    <section class="controls">
+      <label for="yearFilter">Filter by Year:</label>
+      <select id="yearFilter">
+        <option value="all">All</option>
+      </select>
+    </section>
+
+    <!-- Summary cards (diagnostic-focused KPIs) -->
+    <section class="summary-cards">
+      <div class="card">
+        <h2>Overrun Rate</h2>
+        <p id="kpiOverrunRate">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Avg Cost Variance</h2>
+        <p id="kpiAvgCostVariance">Loading...</p>
+      </div>
+      <div class="card">
+        <h2>Avg Schedule Variance</h2>
+        <p id="kpiAvgScheduleVariance">Loading...</p>
+      </div>
+    </section>
+
+    <!-- Charts grid -->
+    <section class="charts-grid">
+      <div class="chart-card">
+        <h3>Cost Variance — Planned vs Actual</h3>
+        <canvas id="costVarianceByYear"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Schedule Variance — Planned vs Actual</h3>
+        <canvas id="scheduleVarianceByYear"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Change Orders — Top Reasons</h3>
+        <canvas id="coReasons"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Change Orders — Frequency by Project</h3>
+        <canvas id="coFrequencyByProject"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Overrun Attribution — CO vs Other</h3>
+        <canvas id="overrunAttribution"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Variance vs Duration (Correlation)</h3>
+        <canvas id="varianceVsDuration"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Scott Park-Vokoun</p>
+  </footer>
+
+  <!-- Wire up diagnostic logic here -->
+  <script src="../js/diagnostic.js?v=2"></script>
+</body>
+</html>
